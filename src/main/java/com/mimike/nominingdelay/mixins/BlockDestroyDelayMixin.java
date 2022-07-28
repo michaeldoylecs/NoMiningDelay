@@ -8,14 +8,15 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(MultiPlayerGameMode.class)
 public abstract class BlockDestroyDelayMixin
 {
-	@ModifyConstant(method = "startDestroyBlock", constant = @Constant(intValue = 5))
-	private int startBlockDestroyDelayChange(int value)
-	{
-		return 0;
-	}
-	
-	@ModifyConstant(method = "continueDestroyBlock", constant = @Constant(intValue = 5))
-	private int continueBlockDestroyDelayChange(int value)
+	@ModifyConstant(
+		method = {
+			"continueDestroyBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
+			"startDestroyBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z"
+		},
+		constant = @Constant(intValue = 5, log = true),
+		expect = 3
+	)
+	private int nominingdelay_blockDestroyDelayChange(int value)
 	{
 		return 0;
 	}
