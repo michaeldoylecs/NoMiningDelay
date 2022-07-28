@@ -1,0 +1,7 @@
+{
+  "package": "com.mimike.nominingdelay.mixins",
+  "refmap": "mixins.nominingdelay.refmap.json",
+  "client": [
+    "BlockDestroyDelayMixin"
+  ]
+}
