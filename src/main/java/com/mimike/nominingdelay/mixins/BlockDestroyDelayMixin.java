@@ -1,36 +1,22 @@
 package com.mimike.nominingdelay.mixins;
 
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.GameType;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(MultiPlayerGameMode.class)
 public abstract class BlockDestroyDelayMixin
 {
-	@Shadow
-	private int destroyDelay;
-	
-	@Shadow
-	private GameType localPlayerMode;
-	
-	@Inject(
-		method = "continueDestroyBlock",
-		at = @At("HEAD")
-	)
-	public void onContinueDestroyBlock(
-		BlockPos pPosBlock,
-		Direction pDirectionFacing,
-		CallbackInfoReturnable<Boolean> cir)
+	@ModifyConstant(method = "startDestroyBlock", constant = @Constant(intValue = 5))
+	private int startBlockDestroyDelayChange(int value)
 	{
-		if (localPlayerMode.isSurvival())
-		{
-			destroyDelay = 0;
-		}
+		return 0;
+	}
+	
+	@ModifyConstant(method = "continueDestroyBlock", constant = @Constant(intValue = 5))
+	private int continueBlockDestroyDelayChange(int value)
+	{
+		return 0;
 	}
 }
